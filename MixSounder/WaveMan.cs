@@ -17,6 +17,9 @@ namespace MixSounder
         {
             this.waveIn = win;
             this.provider = new BufferedWaveProvider(win.WaveFormat);
+
+            // Exception Buffer Full
+            this.provider.DiscardOnBufferOverflow = true;
         }
 
         public void StartRecord()

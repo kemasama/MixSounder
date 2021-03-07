@@ -24,15 +24,25 @@ namespace MixSounder
         /**
          * WaveIn waveIn  : Main Solution
          *  int   pnumber : Player device number
+         *  
+         *  If waveIn null, none capture
          */
         public void startMix(IWaveIn waveIn, int pnumber)
         {
-            provider = new BufferedWaveProvider(waveIn.WaveFormat);
-
-            waveIn.DataAvailable += (_, e) =>
+            if (waveIn == null)
             {
-                provider.AddSamples(e.Buffer, 0, e.BytesRecorded);
-            };
+                var wwww = new WasapiLoopbackCapture();
+                provider = new BufferedWaveProvider(wwww.WaveFormat);
+            }
+            else
+            {
+                provider = new BufferedWaveProvider(waveIn.WaveFormat);
+
+                waveIn.DataAvailable += (_, e) =>
+                {
+                    provider.AddSamples(e.Buffer, 0, e.BytesRecorded);
+                };
+            }
 
             mixProvider = new MixingWaveProvider32();
             mixProvider.AddInputStream(provider);
@@ -45,7 +55,7 @@ namespace MixSounder
             rePlayer.Play();
 
             this.wavIn = waveIn;
-            waveIn.StartRecording();
+            waveIn?.StartRecording();
         }
 
         public void stopMix()

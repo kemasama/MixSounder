@@ -18,7 +18,16 @@ namespace MixSounder
         public Form1()
         {
             InitializeComponent();
+
+            this.tswitch = new ToggleSwitch();
+            this.tswitch.Location = new Point(260, 196);
+            this.tswitch.Size = new Size(50, 20);
+            this.tswitch.Checked = true;
+
+            this.Controls.Add(this.tswitch);
         }
+
+        private ToggleSwitch tswitch;
 
         private Mixer mixer = new Mixer();
         private bool isMix = false;
@@ -131,7 +140,13 @@ namespace MixSounder
                 UpdateProgress(_, ev);
             };
 
-            mixer.startMix(win, pn);
+            if (this.tswitch.Checked)
+            {
+                mixer.startMix(win, pn);
+            } else
+            {
+                mixer.startMix(null, pn);
+            }
 
             foreach (int min in this.checkedListBox1.CheckedIndices)
             {
@@ -142,6 +157,9 @@ namespace MixSounder
                 mixer.addMix(man);
             }
 
+            this.listBox1.Enabled = false;
+            this.checkedListBox1.Enabled = false;
+            this.tswitch.Enabled = false;
         }
 
         private void stopBtn_Click(object sender, EventArgs e)
@@ -155,7 +173,11 @@ namespace MixSounder
 
             mixer.stopMix();
 
-            SafeUpdate(this.progressBar1, "Value", 100);
+            this.listBox1.Enabled = true;
+            this.checkedListBox1.Enabled = true;
+            this.tswitch.Enabled = true;
+
+            SafeUpdate(this.progressBar1, "Value", 0);
 
         }
     }

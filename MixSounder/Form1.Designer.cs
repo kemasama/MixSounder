@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // startBtn
@@ -89,7 +90,7 @@
             this.listBox1.ItemHeight = 12;
             this.listBox1.Location = new System.Drawing.Point(176, 93);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(158, 112);
+            this.listBox1.Size = new System.Drawing.Size(158, 100);
             this.listBox1.TabIndex = 5;
             // 
             // progressBar1
@@ -99,11 +100,21 @@
             this.progressBar1.Size = new System.Drawing.Size(326, 23);
             this.progressBar1.TabIndex = 6;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(176, 200);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(80, 12);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Rec Desktop ?";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(350, 258);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label2);
@@ -131,6 +142,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label3;
     }
 }
 
