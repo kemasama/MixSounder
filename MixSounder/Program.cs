@@ -17,7 +17,15 @@ namespace MixSounder
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            MutexHandle.Handle("KemaMixSounder", new Form1());
+            bool mutex = false;
+
+            if (mutex)
+            {
+                MutexHandle.Handle("KemaMixSounder", new Form1());
+            } else
+            {
+                Application.Run(new Form1());
+            }
         }
     }
 }

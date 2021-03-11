@@ -7,6 +7,7 @@ using NAudio.CoreAudioApi;
 using NAudio.MediaFoundation;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
+using MixSounder.Effect;
 
 namespace MixSounder
 {
@@ -20,6 +21,63 @@ namespace MixSounder
 
         private IWaveIn wavIn = null;
         private WaveOut rePlayer = null;
+
+        private int muteTime = 0;
+
+        public WaveFormat WaveFormat { get; set; }
+        public float Volume
+        {
+            get
+            {
+                return CustomWaveProvider.Volume;
+            }
+            set
+            {
+                CustomWaveProvider.Volume = value;
+            }
+        }
+
+        public void toggleMute()
+        {
+            Console.WriteLine("Toggle Mute CUR: " + rePlayer.PlaybackState);
+            if (rePlayer.PlaybackState == PlaybackState.Playing)
+            {
+                rePlayer.Pause();
+                muteTime = Environment.TickCount;
+            } else
+            {
+                try
+                {
+                    int ticks = ((Environment.TickCount - muteTime) / 1000) + 1;
+                    byte[] buffer = new byte[mixProvider.WaveFormat.AverageBytesPerSecond];
+                    int count = mixProvider.WaveFormat.AverageBytesPerSecond;
+
+                    Console.WriteLine("E: " + ticks);
+                    Console.WriteLine("B: " + count);
+
+                    for (int i = 0; i < ticks; i++)
+                    {
+                        mixProvider.Read(buffer, 0, count);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.StackTrace);
+                }
+
+                // Soft Reset
+                rePlayer.Init(mixProvider);
+                rePlayer.Play();
+
+                //rePlayer.Resume();
+            }
+        }
+
+        public bool isMute()
+        {
+            return rePlayer.PlaybackState != PlaybackState.Playing;
+        }
 
         /**
          * WaveIn waveIn  : Main Solution
@@ -43,6 +101,8 @@ namespace MixSounder
                     provider.AddSamples(e.Buffer, 0, e.BytesRecorded);
                 };
             }
+
+            WaveFormat = provider.WaveFormat;
 
             mixProvider = new MixingWaveProvider32();
             mixProvider.AddInputStream(provider);
@@ -72,6 +132,7 @@ namespace MixSounder
         public void addMix(WaveMan man)
         {
             mixProvider.AddInputStream(man.getProvider());
+
             man.StartRecord();
             mixBuffered.Add(man);
         }

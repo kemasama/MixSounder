@@ -80,12 +80,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomWaveProvider.cs" />
+    <Compile Include="DataSave.cs" />
+    <Compile Include="Effect\Effect.cs" />
+    <Compile Include="Effect\EffectStream.cs" />
+    <Compile Include="Effect\PitchEffect.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HotKey.cs" />
     <Compile Include="Mixer.cs" />
     <Compile Include="MutexHandle.cs" />
     <Compile Include="Program.cs" />

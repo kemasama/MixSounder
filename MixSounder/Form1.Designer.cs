@@ -36,6 +36,8 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label3 = new System.Windows.Forms.Label();
+            this.volumeBar = new System.Windows.Forms.TrackBar();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
             this.SuspendLayout();
             // 
             // startBtn
@@ -65,6 +67,7 @@
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(157, 116);
             this.checkedListBox1.TabIndex = 2;
+            this.checkedListBox1.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.checkedListBox1_ItemCheck);
             // 
             // label1
             // 
@@ -95,9 +98,9 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 223);
+            this.progressBar1.Location = new System.Drawing.Point(12, 264);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(326, 23);
+            this.progressBar1.Size = new System.Drawing.Size(326, 27);
             this.progressBar1.TabIndex = 6;
             // 
             // label3
@@ -109,11 +112,22 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Rec Desktop ?";
             // 
+            // volumeBar
+            // 
+            this.volumeBar.Location = new System.Drawing.Point(12, 215);
+            this.volumeBar.Maximum = 100;
+            this.volumeBar.Name = "volumeBar";
+            this.volumeBar.Size = new System.Drawing.Size(158, 45);
+            this.volumeBar.TabIndex = 8;
+            this.volumeBar.Value = 50;
+            this.volumeBar.Scroll += new System.EventHandler(this.volumeBar_Scroll);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 258);
+            this.ClientSize = new System.Drawing.Size(350, 303);
+            this.Controls.Add(this.volumeBar);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.listBox1);
@@ -127,7 +141,9 @@
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.Text = "Mixer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -143,6 +159,7 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TrackBar volumeBar;
     }
 }
 

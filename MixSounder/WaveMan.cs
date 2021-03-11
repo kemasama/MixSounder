@@ -12,11 +12,13 @@ namespace MixSounder
     {
         private WaveIn waveIn;
         private BufferedWaveProvider provider;
+        private CustomWaveProvider cProvider;
 
         public WaveMan(WaveIn win)
         {
             this.waveIn = win;
             this.provider = new BufferedWaveProvider(win.WaveFormat);
+            this.cProvider = new CustomWaveProvider(provider);
 
             // Exception Buffer Full
             this.provider.DiscardOnBufferOverflow = true;
@@ -24,6 +26,10 @@ namespace MixSounder
 
         public void StartRecord()
         {
+            // Pitcher
+            //float sampleRate = 16000f;
+            //float pitch = 200f;
+
             this.waveIn.DataAvailable += (_, e) =>
             {
                 this.provider.AddSamples(e.Buffer, 0, e.BytesRecorded);
@@ -41,6 +47,7 @@ namespace MixSounder
         {
             this.waveIn.Dispose();
             this.provider = null;
+            this.cProvider = null;
             this.waveIn = null;
         }
 
@@ -52,6 +59,11 @@ namespace MixSounder
         public BufferedWaveProvider getProvider()
         {
             return provider;
+        }
+
+        public CustomWaveProvider getCProvider()
+        {
+            return cProvider;
         }
 
         public override bool Equals(object obj)
